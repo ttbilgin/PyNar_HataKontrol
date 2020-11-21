@@ -1,1 +1,0 @@
-# E1121 üretirdef yazdir():    print("selam")yazdir(1)
