@@ -1,1 +1,0 @@
-# E0001 invalid syntax hatası üretirx=input('Bir sayı giriniz= 'print(x)
