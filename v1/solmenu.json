@@ -1,0 +1,22 @@
+{
+
+	"Döngüler":
+	{
+	"For Döngüleri" :{
+			"örnek1" : "for i in range(10):\n\tprint(i)"
+			},
+	"While Döngüleri" :{
+			"örnek1" : "i = 1\nwhile i < 6:\n\tprint(i)\n\ti += 2"
+			}
+	},
+"Matematik Fonksiyonları":
+	{
+	"Min-Max" :{
+			"örnek1" : "y = max(5, 10, 25)\nprint(y)"
+			},
+	"Mutlak Değer" :{
+			"örnek1" : "x = abs(-7.25)\nprint(x)"
+			}
+	}
+
+}
