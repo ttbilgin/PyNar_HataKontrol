@@ -4,7 +4,7 @@ import sys
 import os,io
 import logging
 import json, requests
-from pytodb2 import define_error
+from linting import define_error
 from cevapVer import Chat
 from datetime import datetime
 from PyQt5.QtSql import QSqlDatabase
