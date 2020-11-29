@@ -4,7 +4,8 @@ import sys
 import os,io
 import logging
 import json, requests
-from linting import define_error
+import pytodb_v2 as vtb_yaz
+from linting import hatatanimla
 from cevapVer import Chat
 from datetime import datetime
 from PyQt5.QtSql import QSqlDatabase
@@ -722,12 +723,12 @@ class proje(QMainWindow):
     # region ButtonClick
     def PlayButtonClick(self):
         code = self.ui.textEdit_kodBlogu.toPlainText()
-        
         if code:
             f = open("temp.txt", "w")
             f.write(code)
             f.close()
-            hata_listesi = define_error("temp.txt")
+            vtb_yaz.runit("temp.txt")
+            hata_listesi = hatatanimla("temp.txt")
             os.remove("temp.txt")
             if(len(hata_listesi) == 0):
                 old_stdout = sys.stdout

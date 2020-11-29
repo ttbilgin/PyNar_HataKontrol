@@ -11,7 +11,7 @@ import platform
 #gathering error as a dictionary
 
 # Linting Errors 
-def define_error(filename):
+def hatatanimla(filename):
     options = '--errors-only'  # all messages will be shown
     pylint_stdout, pylint_stderr = epylint.py_run(filename+ ' ' + options, return_std=True)
     #db_dict={} #Creating an Open Dictionary
