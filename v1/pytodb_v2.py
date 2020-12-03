@@ -100,4 +100,14 @@ def runit(filename):
     # Sending Errors to DB with any Dictionary Elements of Error Lists
     for i in range(len(errors)):
         to_database(errors[i])
-           
+    return errors
+
+def kodu_cevir(hata_kodu):
+    conn=sql.connect('hatalar.db')
+    c=conn.cursor()
+    try:
+        c.execute("SELECT HATA_CEVIRI FROM Veri WHERE HATA_KODU='%s'" % (hata_kodu))
+        result = c.fetchall()[0]
+    except Exception as err:
+        result = "Hata veritabaninda bulunamadi"
+    return result

@@ -5,7 +5,6 @@ import os,io
 import logging
 import json, requests
 import pytodb_v2 as vtb_yaz
-from linting import hatatanimla
 from cevapVer import Chat
 from datetime import datetime
 from PyQt5.QtSql import QSqlDatabase
@@ -700,15 +699,18 @@ class proje(QMainWindow):
         self.ui.textEdit_message.append("\n")
         self.ui.textEdit_message.moveCursor(QtGui.QTextCursor.End)
 
+    # endregion
+
     # region ButtonClick
+    
     def PlayButtonClick(self):
         code = self.ui.textEdit_kodBlogu.toPlainText()
         if code:
             f = open("temp.txt", "w")
             f.write(code)
             f.close()
-            vtb_yaz.runit("temp.txt")
-            hata_listesi = hatatanimla("temp.txt")
+            hata_listesi = vtb_yaz.runit("temp.txt")
+            #hata_listesi = vtb_yaz.define_error("temp.txt")
             os.remove("temp.txt")
             if(len(hata_listesi) == 0):
                 old_stdout = sys.stdout
@@ -719,7 +721,12 @@ class proje(QMainWindow):
                 sys.stdout = old_stdout
                 self.ui.textEdit_console.setText(str(result))
             else:
-                self.addtochat(str(hata_listesi))
+                for i in hata_listesi:
+                    hata_sebep = vtb_yaz.kodu_cevir(i["Error Code"])
+                    hata_mesaji_1 = ("Kodun %s numarali satirinda %s kodlu hata bulunmakta" % (i["Row"], i["Error Code"]))
+                    hata_mesaji_2 = ("Hatanin sebebi: %s" % (hata_sebep))
+                    self.addtochat(hata_mesaji_1)
+                    self.addtochat(hata_mesaji_2)
         else:
             self.ui.textEdit_console.setText(">>> ")
 
