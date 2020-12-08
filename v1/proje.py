@@ -19,6 +19,25 @@ from PyQt5.QtWidgets import QWidget,QApplication, QTextEdit, QPushButton, QLabel
 logging.basicConfig(filename="chat.log", level=logging.DEBUG)
 logger = logging.getLogger("logger")
 
+def veritabaniBaglan():
+    veritabani = QSqlDatabase.database()
+    if not veritabani.isValid():
+        veritabani = QSqlDatabase.addDatabase("QSQLITE")
+        if not veritabani.isValid():
+            logger.error("Veritabanı Eklenemedi !")
+
+    yaz_dir = QDir()
+    if not yaz_dir.mkpath("."):
+        logger.error("Yazılabilir dizin oluşturulamadı !")
+
+    # Erişilebilir bir veritabanı dosyası oluşturulmuştur.
+    dosyaAdi = "{}/chat-database.sqlite3".format(yaz_dir.absolutePath())
+ 
+    # Veritabanı mevcut değilse open() fonksiyonu SQLite'ı oluşturacaktır.
+    veritabani.setDatabaseName(dosyaAdi)
+    if not veritabani.open():
+        logger.error("Veritabanı Açılamadı")
+        QFile.remove(dosyaAdi)
 
 #region interfaceCodes
 
@@ -246,8 +265,7 @@ class Ui_MainWindow(object):
         self.textEdit_searchEdit.setObjectName("textEdit_searchEdit")
         self.pushButton_searchEdit = QtWidgets.QPushButton(self.frame)
         self.pushButton_searchEdit.setGeometry(QtCore.QRect(250, 10, 50, 45))
-        self.pushButton_searchEdit.setStyleSheet("background-image:url(:/icon/search.png);\n"
-"background-repeat: no-repeat;\n")
+        self.pushButton_searchEdit.setStyleSheet("background-image:url(:/icon/search.png);background-repeat: no-repeat;\n")
         self.pushButton_searchEdit.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/images/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -774,6 +792,7 @@ class proje(QMainWindow):
 
 if __name__ == "__main__":
     uygulama = QApplication([])
+    veritabaniBaglan()
     sql_konusma_modeli = SqlKonusmaModeli()
     pencere = proje()
     pencere.show()
